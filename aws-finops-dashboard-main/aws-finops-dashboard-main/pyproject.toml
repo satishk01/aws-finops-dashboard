@@ -1,0 +1,84 @@
+[project]
+name = "aws-finops-dashboard"
+version = "2.2.7"
+description = "A terminal-based AWS cost and resource dashboard."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [{name = "Ravi Kiran Vallamkonda"}]
+dependencies = [
+    "boto3>=1.37.28",
+    "rich>=14.0.0",
+    "requests>=2.0.0",
+    "packaging>=21.0",
+    "reportlab>=3.6.1",
+    "pyyaml>=6.0.2",
+    "tomli>=2.2.1",
+]
+keywords = ["aws", "finops", "dashboard", "cli", "cloud", "cost"]
+
+[project.urls]
+"Homepage" = "https://github.com/ravikiranvm/aws-finops-dashboard"
+"Source" = "https://github.com/ravikiranvm/aws-finops-dashboard"
+
+[project.scripts]
+aws-finops = "aws_finops_dashboard.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.optional-dependencies]
+dev = [
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "hatch>=1.9.0",
+    "mypy>=1.5.1",
+    "types-boto3",
+    "types-requests",
+    "types-reportlab",
+    "types-PyYAML",
+    "types-toml",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.hatch.build.targets.wheel]
+packages = ["aws_finops_dashboard"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build]
+packages = ["aws_finops_dashboard"]
+
+# Custom scripts for development tasks
+[tool.hatch.envs.default]
+dependencies = [
+    "black>=23.12.1",
+    "isort>=5.13.2",
+    "mypy>=1.5.1",
+    "types-boto3",
+    "types-requests",
+    "types-reportlab",
+    "types-PyYAML",
+    "types-toml",
+]
+
+[tool.hatch.envs.default.scripts]
+fmt = [
+    "isort aws_finops_dashboard",
+    "black aws_finops_dashboard",
+]
+lint = [
+    "black --check aws_finops_dashboard",
+    "isort --check aws_finops_dashboard",
+    "mypy aws_finops_dashboard",
+]
